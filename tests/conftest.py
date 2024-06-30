@@ -16,7 +16,7 @@ from locators.locators import MainPageLocators as Mpl
 from locators.locators import LoginPageLocators as Lpl
 
 
-@pytest.fixture(params=['chrome'])
+@pytest.fixture(params=['chrome', 'firefox'])
 def driver(request):
     if request.param == 'chrome':
         chrome_options = Options()
