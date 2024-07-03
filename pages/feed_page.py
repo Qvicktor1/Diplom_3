@@ -28,3 +28,7 @@ class FeedPage(BasePage):
                  'has changed to current order number')
     def check_if_order_number_is_shown_in_progress(self):
         self.wait_till_text_is_shown(Fpl.in_progress_number, '0')
+
+    @allure.step('Get in progress number')
+    def get_in_progress_number(self):
+        return self.get_text_element(Fpl.in_progress_number)

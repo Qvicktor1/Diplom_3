@@ -5,7 +5,6 @@ import time
 from pages.main_page import MainPage
 from pages.feed_page import FeedPage
 from pages.profile_page import ProfilePage
-from pages.history_page import HistoryPage
 from locators.locators import MainPageLocators as Mpl
 from locators.locators import ProfilePageLocators as Ppl
 from locators.locators import FeedPageLocators as Fpl
@@ -21,8 +20,8 @@ class TestFeed:
     def test_click_on_order_opens_details_popup_window(self, driver, create_user, sign_in,
                                                        create_new_order_and_get_its_number):
         main_page = MainPage(driver)
-        main_page.click_element(Mpl.feed_button_header)
         feed_page = FeedPage(driver)
+        main_page.click_element(Mpl.feed_button_header)
         order_number = create_new_order_and_get_its_number
         feed_page.click_on_created_order(order_number)
         assert feed_page.check_element_is_visible(Fpl.composition_header), 'Order details window is not displayed'
@@ -32,12 +31,12 @@ class TestFeed:
     def test_user_order_displayed_on_feed_page(self, driver, create_user, sign_in):
         main_page = MainPage(driver)
         main_page.create_new_order()
-        main_page.click_element(Mpl.account_button_header)
+        main_page.click_on_account_button()
         profile_page = ProfilePage(driver)
-        profile_page.click_element(Ppl.orders_history_url)
-        history_page = HistoryPage(driver)
-        order_number = history_page.get_text_element(Hpl.order_number_history)
-        profile_page.click_element(Mpl.feed_button_header)
+        profile_page.open_order_history()
+        history_page = ProfilePage(driver)
+        order_number = history_page.get_last_order_number()
+        profile_page.click_on_feed_button()
         feed_page = FeedPage(driver)
         assert feed_page.check_order_number_is_visible(order_number), \
             'User orders from "Orders History" are not displayed on "Feed page"'
@@ -47,11 +46,12 @@ class TestFeed:
     @pytest.mark.parametrize('counter, description', CommonData.counters)
     def test_increase_completed_counters(self, driver, create_user, sign_in, counter, description):
         main_page = MainPage(driver)
-        main_page.click_element(Mpl.feed_button_header)
         feed_page = FeedPage(driver)
+        main_page.click_on_feed_button()
+
         counter_prior_order = feed_page.get_text_element(counter)
         main_page.create_new_order()
-        main_page.click_element(Mpl.feed_button_header)
+        main_page.click_on_feed_button()
         counter_after_order = feed_page.get_text_element(counter)
         assert counter_after_order > counter_prior_order, \
             f'"{description}" counter did not increase'
@@ -62,9 +62,9 @@ class TestFeed:
                                                         create_new_order_and_get_its_number):
         order_number = create_new_order_and_get_its_number
         main_page = MainPage(driver)
-        main_page.click_element(Mpl.feed_button_header)
+        main_page.click_on_feed_button()
         feed_page = FeedPage(driver)
         feed_page.check_if_order_number_is_shown_in_progress()
-        order_number_in_progress = feed_page.get_text_element(Fpl.in_progress_number)
+        order_number_in_progress = feed_page.get_in_progress_number()
         assert f'0{order_number}' == order_number_in_progress, \
             'Number of created order is not displayed in "In progress" section'

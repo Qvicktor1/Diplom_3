@@ -17,7 +17,9 @@ class MainPageLocators:
     order_identifier_header = (By.XPATH, ".//p[text()='идентификатор заказа']")  # надпись "идентификатор заказа" во всплывающем окне с подтверждением заказа
     order_number = (By.XPATH, ".//p[text()='идентификатор заказа']/../h2")  # номер заказа во всплывающем окне с подтверждением заказа
     order_number_window_close_button = (By.XPATH, ".//button[@type='button']")  # кнопка закрытия всплывающего окна с подтверждением заказа
-
+    order_modal_window = (By.XPATH, "//p[contains(text(),'Ваш заказ начали готовить')]")  # Модальное окно с информацией об оформленном заказе
+    order_loading_animation = (By.XPATH, '//*[@id="root"]/div/div/img')
+    modal_overlay = (By.XPATH, '//*[@id="root"]/div/div/div')
 
 class FeedPageLocators:
     feed_header = (By.XPATH, ".//h1[text()='Лента заказов']")  # заголовок "Лента заказов" в ленте заказов

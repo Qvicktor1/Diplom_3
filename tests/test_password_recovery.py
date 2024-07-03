@@ -2,9 +2,8 @@ import allure
 from data import Urls
 
 from pages.forgot_password_page import ForgotPasswordPage
-from pages.reset_password_page import ResetPasswordPage
+from pages.main_page import MainPage
 
-from locators.locators import ResetPasswordPageLocators as Rppl
 
 
 class TestPasswordRecovery:
@@ -22,8 +21,8 @@ class TestPasswordRecovery:
     def test_input_email_and_click_on_pass_recovery_button_opens_reset_pass_page(self, driver, get_forgot_pass_page):
         forgot_pass_page = ForgotPasswordPage(driver)
         forgot_pass_page.send_user_email_and_click_recover()
-        reset_pass_page = ResetPasswordPage(driver)
-        assert reset_pass_page.check_element_is_visible(Rppl.show_password_button), 'Unable to get Reset Password page'
+        reset_pass_page = MainPage(driver)
+        assert reset_pass_page.check_password_page(), 'Unable to get Reset Password page'
 
     @allure.title('Checking the focus on Password entry field')
     @allure.description('Checks that clicking on the "Show/Hide Password" button'
@@ -31,7 +30,8 @@ class TestPasswordRecovery:
     def test_highlight_pass_entry_field(self, driver, get_forgot_pass_page):
         forgot_pass_page = ForgotPasswordPage(driver)
         forgot_pass_page.send_user_email_and_click_recover()
-        reset_pass_page = ResetPasswordPage(driver)
-        reset_pass_page.click_element(Rppl.show_password_button)
-        assert reset_pass_page.check_element_is_visible(Rppl.password_field_highlight), \
+        reset_pass_page = MainPage(driver)
+        reset_pass_page.show_password()
+        assert reset_pass_page.check_highlight_password(), \
             'Password entry field on "Reset Password" page is not highlighted'
+

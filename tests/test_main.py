@@ -16,7 +16,7 @@ class TestMain:
     @pytest.mark.parametrize('page_locator, page_header, description', CommonData.headers)
     def test_transition_to_constructor_and_feed_pages(self, driver, page_locator, page_header, description):
         main_page = MainPage(driver)
-        main_page.click_element(Mpl.account_button_header)
+        main_page.click_on_account_button()
         main_page.click_element(page_locator)
         assert main_page.check_element_is_visible(page_header), \
             f'Unable to open "{description}" page'
@@ -25,17 +25,17 @@ class TestMain:
     @allure.description('Checks that clicking on the ingredient opens pop-up window with the ingredient info')
     def test_click_on_ingredient_opens_popup_window(self, driver):
         main_page = MainPage(driver)
-        main_page.click_element(Mpl.fluoric_bun_name)
-        assert main_page.check_element_is_visible(Mpl.ingredient_details_header), \
+        main_page.click_fluoric_bun()
+        assert main_page.check_open_details(), \
             'Unable to open ingredient pop-up window'
 
     @allure.title('Checking the closing of the ingredient pop-up window')
     @allure.description('Checks that clicking on the close button of the ingredient pop-up window closes the window')
     def test_click_on_ingredient_details_window_close_button_closes_window(self, driver):
         main_page = MainPage(driver)
-        main_page.click_element(Mpl.fluoric_bun_name)
-        main_page.click_element(Mpl.ingredient_details_close_button)
-        assert not main_page.check_element_is_absent(Mpl.ingredient_details_close_button), \
+        main_page.click_fluoric_bun()
+        main_page.close_details()
+        assert not main_page.check_absent_button(), \
             'Unable to close ingredient pop-up window'
 
     @allure.title('Checking increasing of the ingredient counter')
@@ -54,4 +54,4 @@ class TestMain:
     def test_authorised_user_place_order(self, driver, create_user, sign_in):
         main_page = MainPage(driver)
         main_page.create_new_order()
-        assert main_page.check_element_is_visible(Mpl.order_identifier_header), 'Unable to place an order'
+        assert main_page.check_order_history(), 'Unable to place an order'
