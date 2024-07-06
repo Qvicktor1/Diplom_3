@@ -1,14 +1,10 @@
 import allure
 import pytest
-import time
 
 from pages.main_page import MainPage
 from pages.feed_page import FeedPage
 from pages.profile_page import ProfilePage
-from locators.locators import MainPageLocators as Mpl
-from locators.locators import ProfilePageLocators as Ppl
-from locators.locators import FeedPageLocators as Fpl
-from locators.locators import HistoryPageLocators as Hpl
+
 
 from data import CommonData
 
@@ -21,10 +17,10 @@ class TestFeed:
                                                        create_new_order_and_get_its_number):
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
-        main_page.click_element(Mpl.feed_button_header)
+        main_page.click_on_feed_button()
         order_number = create_new_order_and_get_its_number
         feed_page.click_on_created_order(order_number)
-        assert feed_page.check_element_is_visible(Fpl.composition_header), 'Order details window is not displayed'
+        assert feed_page.check_order_window_opened(), 'Order details window is not displayed'
 
     @allure.title('Checking that user orders from "Orders History" are displayed on "Feed page"')
     @allure.description('Checks that user orders from "Orders History" are displayed on "Feed page"')
@@ -36,7 +32,7 @@ class TestFeed:
         profile_page.open_order_history()
         history_page = ProfilePage(driver)
         order_number = history_page.get_last_order_number()
-        profile_page.click_on_feed_button()
+        main_page.click_on_feed_button()
         feed_page = FeedPage(driver)
         assert feed_page.check_order_number_is_visible(order_number), \
             'User orders from "Orders History" are not displayed on "Feed page"'
@@ -48,7 +44,6 @@ class TestFeed:
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
         main_page.click_on_feed_button()
-
         counter_prior_order = feed_page.get_text_element(counter)
         main_page.create_new_order()
         main_page.click_on_feed_button()

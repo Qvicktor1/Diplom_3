@@ -16,13 +16,13 @@ class FeedPage(BasePage):
     def click_on_created_order(self, order_number):
         order_number_template = Fpl.order_number_template
         locator = (order_number_template[0], order_number_template[1].replace('#', f'#0{order_number}'))
-        Wait(self.driver, timeout=10).until(ec.visibility_of_element_located(locator)).click()
+        self.check_element_is_visible(locator).click()
 
     @allure.step('Checking the visibility of the specified order number')
     def check_order_number_is_visible(self, order_number):
         order_number_template = Fpl.order_number_template
         locator = (order_number_template[0], order_number_template[1].replace('#', f'{order_number}'))
-        return Wait(self.driver, timeout=10).until(ec.visibility_of_element_located(locator))
+        return self.check_element_is_visible(locator)
 
     @allure.step('Checking that line "All orders are ready" in "In progress" section '
                  'has changed to current order number')
@@ -32,3 +32,7 @@ class FeedPage(BasePage):
     @allure.step('Get in progress number')
     def get_in_progress_number(self):
         return self.get_text_element(Fpl.in_progress_number)
+
+    @allure.step('Check order window opened')
+    def check_order_window_opened(self):
+        return self.check_element_is_visible(Fpl.composition_header)

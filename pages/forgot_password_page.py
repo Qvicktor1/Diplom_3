@@ -15,3 +15,4 @@ class ForgotPasswordPage(BasePage):
     def send_user_email_and_click_recover(self):
         self.send_user_data(Fppl.email_entry_field_fpp, CommonData.test_email)
         self.click_element(Fppl.recover_button_fpp)
+

@@ -1,4 +1,3 @@
-import time
 
 import pytest
 import requests
@@ -12,23 +11,20 @@ from data import Urls, CommonData
 from pages.main_page import MainPage
 from pages.profile_page import ProfilePage
 from locators.locators import MainPageLocators as Mpl
-from locators.locators import LoginPageLocators as Lpl
-from selenium.webdriver.support import expected_conditions as EC
+from locators.locators import ProfilePageLocators as Ppl
 
 @pytest.fixture(params=['chrome'])
 def driver(request):
     if request.param == 'chrome':
         chrome_options = Options()
-        ##chrome_options.add_argument("--enable-automation")
-        chrome_options.add_argument("--ash-no-nudges")
-        chrome_options.add_argument("--no-first-run")
+        chrome_options.add_argument('ash-no-nudges')
         driver = webdriver.Chrome(options=chrome_options)
     elif request.param == 'firefox':
         driver = webdriver.Firefox()
     else:
         raise ValueError(f"Unsupported browser: {request.param}")
-    driver.get(Urls.main_url)
     driver.maximize_window()
+    driver.get(Urls.main_url)
     yield driver
     driver.quit()
 
@@ -38,7 +34,7 @@ def get_forgot_pass_page(driver):
     main_page = MainPage(driver)
     main_page.click_element(Mpl.account_button_header)
     login_page = ProfilePage(driver)
-    login_page.scroll_and_click(Lpl.forgot_password_button_login)
+    login_page.scroll_and_click(Ppl.forgot_password_button_login)
 
 
 @pytest.fixture()
@@ -62,9 +58,9 @@ def sign_in(driver, create_user):
     main_page = MainPage(driver)
     main_page.click_element(Mpl.account_button_header)
     login_page = ProfilePage(driver)
-    login_page.send_user_data(Lpl.email_input_field, login)
-    login_page.send_user_data(Lpl.password_input_field, CommonData.test_user_password)
-    login_page.click_element(Lpl.sign_in_button)
+    login_page.send_user_data(Ppl.email_input_field, login)
+    login_page.send_user_data(Ppl.password_input_field, CommonData.test_user_password)
+    login_page.click_element(Ppl.sign_in_button)
 
 
 @pytest.fixture()

@@ -18,8 +18,10 @@ class MainPageLocators:
     order_number = (By.XPATH, ".//p[text()='идентификатор заказа']/../h2")  # номер заказа во всплывающем окне с подтверждением заказа
     order_number_window_close_button = (By.XPATH, ".//button[@type='button']")  # кнопка закрытия всплывающего окна с подтверждением заказа
     order_modal_window = (By.XPATH, "//p[contains(text(),'Ваш заказ начали готовить')]")  # Модальное окно с информацией об оформленном заказе
-    order_loading_animation = (By.XPATH, '//*[@id="root"]/div/div/img')
-    modal_overlay = (By.XPATH, '//*[@id="root"]/div/div/div')
+    order_loading_animation = (By.XPATH, ".//img[@alt='loading animation']") # Анимация загрузки номера заказа
+    show_password_button = (By.XPATH, ".//div[@class='input__icon input__icon-action']")  # кнопка "Показать/скрыть пароль" на странице Ввода нового пароля
+    password_field_highlight = (By.XPATH, ".//input[@type='text']")  # подсветка поля ввода пароля
+    modal_overlay = (By.XPATH, './/div[@class="Modal_modal_overlay__x2ZCr"]') # Оверлей затеняющий номер заказа, пока он не загрузился
 
 class FeedPageLocators:
     feed_header = (By.XPATH, ".//h1[text()='Лента заказов']")  # заголовок "Лента заказов" в ленте заказов
@@ -29,28 +31,25 @@ class FeedPageLocators:
     in_progress_number = (By.XPATH, ".//ul[@class='OrderFeed_orderListReady__1YFem OrderFeed_orderList__cBvyi']/li")  # Номер заказа в разделе "В работе"
     order_number_template = (By.XPATH, ".//p[(text()='#')]")
 
-class LoginPageLocators:
-    sign_in_button = (By.XPATH, ".//button[text()='Войти']")  # кнопка "Войти" в форме авторизации
-    email_input_field = (By.XPATH, ".//h2[text()='Вход']/..//label[text() = 'Email']/../input")  # поле ввода "Email" в форме авторизации
-    password_input_field = (By.XPATH, ".//h2[text()='Вход']/..//label[text() = 'Пароль']/../input")  # поле ввода "Пароль" в форме авторизации
-    forgot_password_button_login = (By.XPATH, ".//a[text()='Восстановить пароль']")  # кнопка "Восстановить пароль" в форме авторизации
+
+
 
 
 class ProfilePageLocators:
     profile_url = (By.XPATH, ".//a[text()='Профиль']")  # ссылка "Профиль" в личном кабинете
     orders_history_url = (By.XPATH, ".//a[text()='История заказов']")  # ссылка "История заказов" в личном кабинете
     exit_button = (By.XPATH, ".//button[text()='Выход']")  # кнопка "Выход" в личном кабинете
-
-
-class HistoryPageLocators:
     order_number_history = (By.XPATH, ".//p[contains(text(), '#')]")  # номер заказа в "Истории заказов"
-
-
+    email_input_field = (By.XPATH, ".//h2[text()='Вход']/..//label[text() = 'Email']/../input")  # поле ввода "Email" в форме авторизации
+    sign_in_button = (By.XPATH, ".//button[text()='Войти']")  # кнопка "Войти" в форме авторизации
+    email_input_field = (
+    By.XPATH, ".//h2[text()='Вход']/..//label[text() = 'Email']/../input")  # поле ввода "Email" в форме авторизации
+    password_input_field = (
+    By.XPATH, ".//h2[text()='Вход']/..//label[text() = 'Пароль']/../input")  # поле ввода "Пароль" в форме авторизации
+    forgot_password_button_login = (
+    By.XPATH, ".//a[text()='Восстановить пароль']")  # кнопка "Восстановить пароль" в форме авторизации
 class ForgotPasswordPageLocators:
     email_entry_field_fpp = (By.XPATH, ".//input[@type='text']")  # поле ввода почты на странице "Восстановление пароля"
     recover_button_fpp = (By.XPATH, ".//button[text()='Восстановить']")  # кнопка "Восстановить" на странице "Восстановление пароля"
 
 
-class ResetPasswordPageLocators:
-    show_password_button = (By.XPATH, ".//div[@class='input__icon input__icon-action']")  # кнопка "Показать/скрыть пароль" на странице Ввода нового пароля
-    password_field_highlight = (By.XPATH, ".//input[@type='text']")  # подсветка поля ввода пароля
